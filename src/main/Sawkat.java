@@ -9,7 +9,13 @@ public class Sawkat extends PircBot {
 	
 	private final String DEFAULT_IRC_SERVER = "irc.freenode.net";
 	private final int DEFAULT_IRC_SERVER_PORT = 6667;
-	private final String DEFAULT_CHANNEL = "#dgplug";
+	private final String DEFAULT_CHANNEL = "#pircbot";
+	
+	
+	
+	
+	
+	
 	
 	
 	/*
@@ -21,9 +27,15 @@ public class Sawkat extends PircBot {
 		this(NICK);
 	}
 	
+	
 	public Sawkat(String nick){
 		this.setName(nick);
 	}
+	
+	
+	
+	
+	
 	
 	
 	
@@ -32,25 +44,98 @@ public class Sawkat extends PircBot {
 		return this.DEFAULT_IRC_SERVER;
 	}
 	
+	
+	
+	
 	public int getDefaultPort(){
 		
 		return this.DEFAULT_IRC_SERVER_PORT;
 	}
 	
+	
+	
+	
+	public String getDefaultChannel(){
+		
+		return this.DEFAULT_CHANNEL;
+	}
+
+	
+	
+	
+	public String getNick(){
+		
+		return NICK;
+	}
+	
+	
+	
+	
+	public String getAltNick(){
+		
+		return ALT_NICK;
+	}
+	
+	
+	
+	
+	public String getCurrentNick(){
+		
+		return this.getName();
+	}
+
+
+
+
 	public void changeNick(){
-		try{
+		
+		if (getCurrentNick().equals(getNick())){
+			this.setName(this.getAltNick());
 			
-		}catch(Exception e){
+		}else{
+			this.setName(this.getNick());
 			
 		}
 	}
-
-	/**
-	 * @param args
+	
+	
+	
+	
+	
+	
+	
+	
+	/*Sawkat actions ;)*/
+	
+	
+	/* Defines action to perform when a message is sent
+	 * in the channel.
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public void onMessage(String channel, String sender, String login,
+			String hostname, String message){
+		
+		if (msgIsToMe(message)){
+			try{
+				if (message.contains("hi")){
+					this.sendMessage(channel, "Hello "+sender+"!");
+					Thread.sleep(1000);
+					this.sendMessage(channel, sender+", how are you today?");
+				}
+			}catch(InterruptedException ie){
+				System.out.println("Couldn't sleep. Thread was interrupted.");
+			}
+		}
+	}
+	
+	
+	/* Determines if the given message text
+	 * mentions this bot.
+	 */
+	public boolean msgIsToMe(String msg){
+		return msg.contains(this.getCurrentNick());
 	}
 
+	
+
+	
 }
