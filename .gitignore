@@ -1,0 +1,8 @@
+*~
+*.javac
+*.swp
+bin
+res
+.classpath
+.project
+.settings
